@@ -19,10 +19,10 @@
   ansible.builtin.debug:
     var: schedule_ids
 
-- name: Debug controller API URL
-  ansible.builtin.debug:
-    var: "{{ controller_url }}{{ controller_api_url | trim }}/schedules/{{ item }}/"
-  loop: "{{ schedule_ids }}"
+# - name: Debug controller API URL
+#   ansible.builtin.debug:
+#     var: "{{ controller_url }}{{ controller_api_url | trim }}/schedules/{{ item }}/"
+#   loop: "{{ schedule_ids }}"
 
 - name: Fetch full details for each schedule ID
   ansible.builtin.uri:
