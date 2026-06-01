@@ -36,6 +36,10 @@
   loop: "{{ schedule_ids }}"
   register: schedule_details
 
+- name: Debug schedule details
+  ansible.builtin.debug:
+    var: schedule_details.results
+
 - name: Re-enable each schedule found in the file
   ansible.controller.schedule:
     controller_host: "{{ controller_url }}"

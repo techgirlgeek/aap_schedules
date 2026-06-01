@@ -18,9 +18,9 @@
   ansible.builtin.set_fact:
     controller_api_url: >-
       # {% if aap_version is ansible.builtin.contains("4.5") %}
-      #   /api/v2
+      #   api/v2
       {% if aap_version is ansible.builtin.contains("2.6") or aap_version is ansible.builtin.contains("2.7") %}
-        /api/controller/v2
+        api/controller/v2
       {% endif %}
 
 - name: Debug config
