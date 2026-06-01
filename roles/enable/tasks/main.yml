@@ -17,7 +17,7 @@
 
 - name: Fetch full details for each schedule ID
   ansible.builtin.uri:
-    url: "{{ controller_url }}{{ controller_api_url }}schedules/{{ item }}/"
+    url: "{{ controller_url }}{{ controller_api_url | trim }}/schedules/{{ item }}/"
     method: GET
     status_code: 200
     headers:
