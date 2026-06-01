@@ -4,5 +4,5 @@
   gather_facts: false
 
   roles:
-    - aap-version
+    # - aap-version
     - enable
