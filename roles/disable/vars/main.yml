@@ -1,4 +1,2 @@
 ---
-# vars file for disabling schedules (2.4)
-controller_url: "https://controller-aap.apps.cluster-hcql9.hcql9.sandbox2210.opentlc.com"
-controller_token: "PLeG08Za8xcgeTmvopA9jAlUmaonEl"
+# vars for enable role
