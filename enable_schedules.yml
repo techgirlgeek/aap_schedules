@@ -1,7 +1,4 @@
 ---
-- name: Check Ansible Automation Platform version
-  ansible.builtin.import_playbook: aap_version_check.yml
-
 - name: Re-enable schedules
   hosts: localhost
   gather_facts: false
