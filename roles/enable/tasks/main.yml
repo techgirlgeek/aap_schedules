@@ -31,7 +31,7 @@
     controller_host: "{{ controller_url }}"
     controller_oauthtoken: "{{ controller_token }}"
     name: "{{ item.json.name }}"
-    unified_job_template: "{{ item.json.summary_fields.unified_job_template.name }}"
+    # unified_job_template: "{{ item.json.summary_fields.unified_job_template.name }}"
     enabled: true
     state: present
   loop: "{{ schedule_details.results }}"
