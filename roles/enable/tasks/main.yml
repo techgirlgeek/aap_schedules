@@ -15,6 +15,14 @@
   ansible.builtin.meta: end_play
   when: schedule_ids is not defined or schedule_ids | length == 0
 
+- name: Debug schedule IDs
+  ansible.builtin.debug:
+    var: schedule_ids
+
+- name: Debug controller API URL
+  ansible.builtin.debug:
+    var: "{{ controller_url }}{{ controller_api_url | trim }}/schedules/{{ item }}/"
+
 - name: Fetch full details for each schedule ID
   ansible.builtin.uri:
     url: "{{ controller_url }}{{ controller_api_url | trim }}/schedules/{{ item }}/"
