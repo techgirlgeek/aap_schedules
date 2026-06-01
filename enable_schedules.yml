@@ -3,9 +3,11 @@
   hosts: localhost
   gather_facts: false
 
-  pre_tasks:
+  tasks:
+
     - name: Check Ansible Automation Platform version
-      ansible.builtin.import_playbook: aap_version_check.yml
+      ansible.builtin.import_playbook:
+        file: aap_version_check.yml
 
   roles:
     - enable
