@@ -29,6 +29,10 @@
   ansible.builtin.debug:
     var: aap_version
 
+- name: Debug controller api_url
+  ansible.builtin.debug:
+    var: controller_api_url
+
 - name: Debug stuff
   ansible.builtin.debug:
     msg: "I am version 2.4"
