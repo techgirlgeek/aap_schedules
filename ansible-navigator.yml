@@ -11,13 +11,13 @@ ansible-navigator:
       help: false
     playbook:
       help: false
-  ansible-builder:
-    help: false
-    workdir: /home/lab-user/aap_schedules
+  # ansible-builder:
+  #   help: false
+  #   workdir: /home/lab-user/aap_schedules
   ansible-runner:
     job-events: false
   app: settings
-  collection-doc-cache-path: /home/lab-user/.cache/ansible-navigator/collection_doc_cache.db
+  # collection-doc-cache-path: ~/.cache/ansible-navigator/collection_doc_cache.db
   color:
     enable: true
     osc4: true
@@ -40,7 +40,7 @@ ansible-navigator:
     - everything
   logging:
     append: true
-    file: /home/lab-user/aap_schedules/ansible-navigator.log
+    file: ./ansible-navigator.log
     level: warning
   mode: stdout
   playbook-artifact:

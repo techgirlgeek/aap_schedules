@@ -1,5 +1,5 @@
 ---
-- name: Re-enable schedules from saved IDs in AAP 2.6
+- name: Re-enable schedules
   hosts: localhost
   gather_facts: false
   roles:

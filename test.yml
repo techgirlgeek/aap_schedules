@@ -2,19 +2,11 @@
 - name: Disable all enabled schedules in AAP 2.4
   hosts: localhost
   gather_facts: false
-  vars:
-    # 2.4
-    # controller_url: "https://controller-aap.apps.cluster-hcql9.hcql9.sandbox2210.opentlc.com"
-    # controller_token: "PLeG08Za8xcgeTmvopA9jAlUmaonEl"
-    # 2.6  
-    controller_url: "https://aap-aap.apps.cluster-rfhtw-1.dynamic2.redhatworkshops.io"
-    controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"
 
   tasks:
 
     - name: Query the Controller configuration endpoint
       ansible.builtin.uri:
-        # url: "https://{{ awx_host | default('127.0.0.1') }}/api/v2/config/"
         url: "{{ controller_url }}/api/"
         method: GET
         status_code: 200
@@ -24,72 +16,22 @@
       register: controller_config
 
     - name: Debug config
+      ansible.builtin.set_fact:
+        aap_version: "{{ controller_config.x_api_product_version }}"
+
+    - name: Debug config
       ansible.builtin.debug:
-        var: controller_config.x_api_product_version
-          
+        var: aap_version
+
     - name: Debug stuff
       ansible.builtin.debug:
         msg: "I am version 2.4"
-      when: 
-        - controller_config.x_api_product_version > "4.5" 
-        - controller_config.x_api_product_version < "4.6"
+      when:
+        - aap_version > "4.5"
+        - aap_version < "4.6"
 
     - name: Debug stuff
       ansible.builtin.debug:
         msg: "I am version 2.6"
-      when: 
-        - controller_config.x_api_product_version > "2.6" 
-          #- controller_config.x_api_product_version < "4.6"
-
-
-
-#    - name: Set AAP version fact
-#      ansible.builtin.set_fact:
-#        aap_version: "{{ controller_config.json.version }}"
-
-#    - name: Display AAP Version
-#      ansible.builtin.debug:
-#        msg: "The installed Ansible Automation Platform Controller version is {{ aap_version }}"
-
-#    - name: Gather package facts
-#      ansible.builtin.package_facts:
-#        manager: auto
-
-#    - name: Display Automation Controller package version
-#      ansible.builtin.debug:
-#        var: ansible_facts.packages['automation-controller']
-#      when: "'automation-controller' in ansible_facts.packages"
-
-#    - name: Fetch all enabled schedules
-#      ansible.builtin.uri:
-#        url: "{{ controller_url }}/api/v2/schedules/?enabled=true"
-#        method: GET
-#        status_code: 200
-#        headers:
-#          Authorization: "Bearer {{ controller_token }}"
-#          Content-Type: "application/json"
-#      register: enabled_schedules
-
-#    - name: Show me the schedules
-#      ansible.builtin.lineinfile:
-#        # var: enabled_schedules.json.count
-#        # msg: "Count was: {{ enabled_schedules }}"
-#        line: "{{ item.id }}"
-#        path: ./test.txt
-#        create: true
-#      loop:
-#        "{{ enabled_schedules.json.results }}"
-
-
-#    - name: Disable each schedule found
-#      ansible.controller.schedule:
-#        controller_host: "{{ controller_url }}"
-#        controller_oauthtoken: "{{ controller_token }}"
-#        name: "{{ item.name }}"
-#        unified_job_template: "{{ item.summary_fields.unified_job_template.name }}"
-#        enabled: false
-#        state: present
-#      loop: "{{ enabled_schedules.json.results }}"
-#      when: enabled_schedules.json.count > 0
-#      loop_control:
-#        label: "{{ item.name }}"
+      when:
+        - aap_version > "2.6"

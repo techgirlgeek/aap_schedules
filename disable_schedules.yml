@@ -1,5 +1,5 @@
 ---
-- name: Disable all enabled schedules in AAP 2.4
+- name: Disable all enabled schedules
   hosts: localhost
   gather_facts: false
   roles:
