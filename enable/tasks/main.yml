@@ -1,0 +1,39 @@
+---
+# tasks file for enabling schedules (2.6)
+- name: Read saved schedule IDs from file
+  ansible.builtin.slurp:
+    src: ./test.txt
+  register: saved_ids_encoded
+  ignore_errors: true
+
+- name: Parse IDs into a list
+  ansible.builtin.set_fact:
+    schedule_ids: "{{ (saved_ids_encoded.content | b64decode).splitlines() | map('trim') | select('match', '^\\d+$') | list }}"
+  when: saved_ids_encoded.content is defined
+
+- name: Stop if no IDs found or file is empty
+  ansible.builtin.meta: end_play
+  when: schedule_ids is not defined or schedule_ids | length == 0
+
+- name: Fetch full details for each schedule ID
+  ansible.builtin.uri:
+    url: "{{ controller_url }}/api/controller/v2/schedules/{{ item }}/"
+    method: GET
+    status_code: 200
+    headers:
+      Authorization: "Bearer {{ controller_token }}"
+      Content-Type: "application/json"
+  loop: "{{ schedule_ids }}"
+  register: schedule_details
+
+- name: Re-enable each schedule found in the file
+  ansible.controller.schedule:
+    controller_host: "{{ controller_url }}"
+    controller_oauthtoken: "{{ controller_token }}"
+    name: "{{ item.json.name }}"
+    unified_job_template: "{{ item.json.summary_fields.unified_job_template.name }}"
+    enabled: true
+    state: present
+  loop: "{{ schedule_details.results }}"
+  loop_control:
+    label: "{{ item.json.name }} (ID: {{ item.json.id }})"

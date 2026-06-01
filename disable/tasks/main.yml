@@ -1,0 +1,35 @@
+---
+# tasks file for disabling schedules (2.4)
+- name: Fetch all enabled schedules
+  ansible.builtin.uri:
+    url: "{{ controller_url }}/api/v2/schedules/?enabled=true"
+    method: GET
+    status_code: 200
+    headers:
+      Authorization: "Bearer {{ controller_token }}"
+      Content-Type: "application/json"
+  register: enabled_schedules
+
+- name: Show me the schedules
+  ansible.builtin.lineinfile:
+    # var: enabled_schedules.json.count
+    # msg: "Count was: {{ enabled_schedules }}"
+    line: "{{ item.id }}"
+    path: ./test.txt
+    create: true
+  loop:
+    "{{ enabled_schedules.json.results }}"
+
+
+- name: Disable each schedule found
+  ansible.controller.schedule:
+    controller_host: "{{ controller_url }}"
+    controller_oauthtoken: "{{ controller_token }}"
+    name: "{{ item.name }}"
+    unified_job_template: "{{ item.summary_fields.unified_job_template.name }}"
+    enabled: false
+    state: present
+  loop: "{{ enabled_schedules.json.results }}"
+  when: enabled_schedules.json.count > 0
+  loop_control:
+    label: "{{ item.name }}"

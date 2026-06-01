@@ -1,0 +1,8 @@
+---
+# Disable vars (2.4)
+controller_url: "https://controller-aap.apps.cluster-hcql9.hcql9.sandbox2210.opentlc.com"
+controller_token: "PLeG08Za8xcgeTmvopA9jAlUmaonEl"
+
+# Enable vars (2.6)
+controller_url: "https://aap-aap.apps.cluster-rfhtw-1.dynamic2.redhatworkshops.io"
+controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"

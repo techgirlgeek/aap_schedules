@@ -4,11 +4,11 @@
   gather_facts: false
   vars:
     # 2.4
-    controller_url: "https://controller-aap.apps.cluster-hcql9.hcql9.sandbox2210.opentlc.com"
-    controller_token: "PLeG08Za8xcgeTmvopA9jAlUmaonEl"
+    # controller_url: "https://controller-aap.apps.cluster-hcql9.hcql9.sandbox2210.opentlc.com"
+    # controller_token: "PLeG08Za8xcgeTmvopA9jAlUmaonEl"
     # 2.6  
-    # controller_url: "https://aap-aap.apps.cluster-rfhtw-1.dynamic2.redhatworkshops.io"
-    # controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"
+    controller_url: "https://aap-aap.apps.cluster-rfhtw-1.dynamic2.redhatworkshops.io"
+    controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"
 
   tasks:
 
@@ -33,6 +33,14 @@
       when: 
         - controller_config.x_api_product_version > "4.5" 
         - controller_config.x_api_product_version < "4.6"
+
+    - name: Debug stuff
+      ansible.builtin.debug:
+        msg: "I am version 2.6"
+      when: 
+        - controller_config.x_api_product_version > "2.6" 
+          #- controller_config.x_api_product_version < "4.6"
+
 
 
 #    - name: Set AAP version fact
