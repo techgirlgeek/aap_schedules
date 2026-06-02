@@ -6,7 +6,7 @@ This project contains a playbook to disable all active schedules in AAP 2.4 and 
 
 The intent of this project is to disable schedules to allow for an AAP upgrade, or other system maintenance, and enable the same schedules once the work is complete.
 
-NOTE: Any schedules that were already disabled prior to running `disable_schedules.yml` will stay disabled after running `enable_schedules.yml`
+> **_NOTE:_** Any schedules that were already disabled prior to running `disable_schedules.yml` will stay disabled after running `enable_schedules.yml`
 
 ## Getting Started
 
@@ -18,6 +18,7 @@ NOTE: Any schedules that were already disabled prior to running `disable_schedul
 * Required Execution Environment:
   * Based on AAP version:
     * 2.4: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9:latest
+    * 2.5: registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest
     * 2.6: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
 
 ```sh
@@ -26,7 +27,7 @@ ansible-galaxy collection install ansible.controller
 
 ### Installing
 
-* Once you have pulled down the playbooks, you will need to update the `controller_url` and `controller_token` vars in group_vars directory with your controller URL and API token, respectively
+* Once you have pulled down the playbooks, you will need to update the `controller_url` and `controller_token` vars in the group_vars directory with your controller URL and API token, respectively
 
 ### Executing program
 
