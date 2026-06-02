@@ -1,5 +1,5 @@
 ---
-# tasks file for disabling schedules (2.4)
+# tasks file for disabling schedules
 - name: Fetch all enabled schedules
   ansible.builtin.uri:
     url: "{{ controller_url }}/{{ controller_api_url | trim }}/schedules/?enabled=true"
