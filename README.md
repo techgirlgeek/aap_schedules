@@ -14,16 +14,12 @@ The intent of this project is to disable schedules to allow for an AAP upgrade, 
 
 * You must have [ansible-navigator](https://docs.ansible.com/projects/navigator/installation/) installed to run these playbooks
 * Required collections:
-  * ansible.controller
+  * ansible.controller - Included in the EE's
 * Required Execution Environment:
   * Based on AAP version:
     * 2.4: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9:latest
     * 2.5: registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest
     * 2.6: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
-
-```sh
-ansible-galaxy collection install ansible.controller
-```
 
 ### Installing
 
