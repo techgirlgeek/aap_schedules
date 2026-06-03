@@ -1,0 +1,5 @@
+# Unencrypted for purposes of this repo
+# Encrypt prior to using
+# `ansible-vault encrypt vault`
+
+controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"

@@ -2,7 +2,8 @@
 - name: Re-enable previously disabled schedules
   hosts: localhost
   gather_facts: false
-
+  vars_files:
+    - ../vaults/all.yml
   roles:
     - aap-version
     - enable

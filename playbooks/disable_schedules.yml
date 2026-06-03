@@ -2,6 +2,8 @@
 - name: Disable all enabled schedules
   hosts: localhost
   gather_facts: false
+  vars_files:
+    - ../vaults/all.yml
   roles:
     - aap-version
     - disable
