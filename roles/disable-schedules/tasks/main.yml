@@ -15,8 +15,6 @@
     line: "{{ item.id }}"
     path: ./sched_ids.txt
     create: true
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_gid }}"
     mode: '0644'
   loop:
     "{{ enabled_schedules.json.results }}"
