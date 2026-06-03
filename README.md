@@ -23,7 +23,15 @@ The intent of this project is to disable schedules to allow for an AAP upgrade, 
 
 ### Installing
 
-* Once you have pulled down the playbooks, you will need to update the `controller_url` and `controller_token` vars in the group_vars/all.yml file with your controller URL and API token, respectively
+* Once you have pulled down the playbooks, you will need to update the `controller_url` variable in the group_vars/all.yml file with your controller URL.
+* In the vaults directory there is an all.yml file. This is where you will update the `controller_token` variable with the API token.
+* Next encrypt your vaults/all.yml file (not the full directory) <https://docs.ansible.com/projects/ansible/latest/vault_guide/vault_managing_passwords.html>
+
+```sh
+ansible-vault encrypt all.yml
+```
+
+* Remember the password you used to encrypt the file.
 
 ### Executing program
 
@@ -33,16 +41,16 @@ The intent of this project is to disable schedules to allow for an AAP upgrade, 
 ansible-navigator run disable_schedules.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9
 ```
 
-* To disable all active schedules
+* To disable all active schedules. IDs of the scheduled jobs will be kept in a file in the playbook directory.
 
 ```sh
-ansible-navigator run disable_schedules.yml
+ansible-navigator run disable_schedules.yml --ask-vault-password
 ```
 
 * To re-enable all schedules disabled in the previous step
 
 ```sh
-ansible-navigator run enable_schedules.yml
+ansible-navigator run enable_schedules.yml --ask-vault-password
 ```
 
 ## Authors
