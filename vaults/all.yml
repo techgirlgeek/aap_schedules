@@ -3,4 +3,4 @@
 # Encrypt prior to using
 # `ansible-vault encrypt vault`
 
-controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"
+controller_token: "fake-token-for-testing"

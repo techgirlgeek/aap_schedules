@@ -5,7 +5,7 @@
   gather_facts: false
   vars_files:
     - ../group_vars/{{ env | default('all') }}.yml
-    # - "../vaults/{{ env | default('all') }}.yml"
+    - ../vaults/{{ env | default('all') }}.yml
   tasks:
     - name: Print environment
       ansible.builtin.debug:
@@ -14,3 +14,7 @@
     - name: Print controller_token
       ansible.builtin.debug:
         var: controller_url
+
+    - name: Print controller_token
+      ansible.builtin.debug:
+        var: controller_token
