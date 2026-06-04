@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars_files:
-    - ../group_vars/{{ env }}.yml
+    - ../group_vars/{{ env | default('all') }}.yml
     # - "../vaults/{{ env | default('all') }}.yml"
   tasks:
     - name: Print environment
