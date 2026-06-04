@@ -4,7 +4,7 @@
     var: env
 - name: debug something else
   ansible.builtin.debug:
-    var: controller_url
+    var: controller_token
 
 # tasks file for aap-version
 - name: Query the Controller configuration endpoint
