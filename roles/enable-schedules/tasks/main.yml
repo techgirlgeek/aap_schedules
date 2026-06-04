@@ -2,7 +2,7 @@
 # tasks file for enabling schedules
 - name: Read saved schedule IDs from file
   ansible.builtin.slurp:
-    src: ./sched_ids.txt
+    src: ../sched_ids.txt
   register: saved_ids_encoded
   ignore_errors: true
 
