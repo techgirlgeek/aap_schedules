@@ -8,6 +8,7 @@
     headers:
       Authorization: "Bearer {{ controller_token }}"
       Content-Type: "application/json"
+  delegate_to: localhost
   register: controller_config
 
 - name: Set aap_version fact
