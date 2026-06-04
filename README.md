@@ -38,19 +38,19 @@ ansible-vault encrypt all.yml
 * The ansible-navigator.yml file specifies the AAP 2.6 execution environment. If you are running this on a lower environment you will need to call the EE during the run command:
 
 ```sh
-ansible-navigator run disable_schedules.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, --extra_vars "dev"
+ansible-navigator run disable_schedules.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, -e "dev"
 ```
 
 * To disable all active schedules. IDs of the scheduled jobs will be kept in a file in the playbook directory.
 
 ```sh
-ansible-navigator run disable_schedules.yml --ask-vault-password -i localhost, --extra_vars "dev"
+ansible-navigator run disable_schedules.yml --ask-vault-password -i localhost, -e "dev"
 ```
 
 * To re-enable all schedules disabled in the previous step
 
 ```sh
-ansible-navigator run enable_schedules.yml --ask-vault-password -i localhost, --extra_vars "dev"
+ansible-navigator run enable_schedules.yml --ask-vault-password -i localhost, -e "dev"
 ```
 
 ## Authors
