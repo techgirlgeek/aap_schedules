@@ -21,6 +21,11 @@ The intent of this project is to disable schedules to allow for an AAP upgrade, 
     * 2.5: registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest
     * 2.6: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
 
+  ```sh
+  podman login registry.redhat.io
+  podman pull registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
+  ```
+
 ### Installing
 
 * Once you have pulled down the playbooks, you will need to update the `controller_url` variable in the group_vars/all.yml file with your controller URL.
