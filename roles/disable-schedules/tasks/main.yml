@@ -2,7 +2,7 @@
 # tasks file for disabling schedules
 - name: Look for existing Sched IDs File
   ansible.builtin.stat:
-    path: "../sched_ids{{ env }}.txt"
+    path: "../sched_ids_{{ env }}.txt"
   register: sched_ids_file
 
 - name: Stat the stat
