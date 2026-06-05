@@ -14,14 +14,14 @@
   block:
     - name: Copy Sched ID file if exists
       ansible.builtin.copy:
-        src: "../sched_ids{{ env }}.txt"
-        dest: "../sched_ids{{ env }}.txt.bak.%Y%m%d%H%M.%S"
+        src: "../sched_ids_{{ env }}.txt"
+        dest: "../sched_ids_{{ env }}.txt.bak.%Y%m%d%H%M.%S"
         remote_src: true
         mode: '0644'
 
     - name: Remove Sched IDs file if exists
       ansible.builtin.file:
-        path: "../sched_ids{{ env }}.txt"
+        path: "../sched_ids_{{ env }}.txt"
         state: absent
 
 - name: Fetch all enabled schedules
