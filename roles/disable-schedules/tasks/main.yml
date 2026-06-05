@@ -11,7 +11,7 @@
     - name: Copy Sched ID file if exists
       ansible.builtin.copy:
         src: "../sched_ids_{{ env }}.txt"
-        dest: "../sched_ids_{{ env }}.txt.bak.%Y%m%d%H%M.%S"
+        dest: "../sched_ids_{{ env }}.txt.bak.{{ ansible_date_time.iso8601_basic_short }}"
         remote_src: true
         mode: '0644'
 
