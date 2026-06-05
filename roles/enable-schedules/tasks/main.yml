@@ -1,8 +1,21 @@
 ---
 # tasks file for enabling schedules
+- name: Get status of the file
+  ansible.builtin.stat:
+    path: "../sched_ids{{ env }}.txt"
+  register: schedids_file
+
+- name: Assert that the file exists and is a regular file
+  ansible.builtin.assert:
+    that:
+      - schedids_file.stat.exists
+      - schedids_file.stat.isreg
+    fail_msg: "The schedule IDS file does not exist or is not a regular file!"
+    success_msg: "Schedule IDS file found, proceeding with enabling schedules."
+
 - name: Read saved schedule IDs from file
   ansible.builtin.slurp:
-    src: ../sched_ids.txt
+    src: "../sched_ids{{ env }}.txt"
   register: saved_ids_encoded
   ignore_errors: true
 

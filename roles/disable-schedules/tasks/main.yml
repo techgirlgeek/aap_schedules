@@ -1,5 +1,25 @@
 ---
 # tasks file for disabling schedules
+- name: Look for existing Sched IDs File
+  ansible.builtin.stat:
+    path: "../sched_ids{{ env }}.txt"
+  register: sched_ids_file
+
+- name: Backup and Remove existing Sched IDs File
+  when: sched_ids_file.stat.isreg
+  block:
+    - name: Copy Sched ID file if exists
+      ansible.builtin.copy:
+        src: "../sched_ids{{ env }}.txt"
+        dest: "../sched_ids{{ env }}.txt.bak.%Y%m%d%H%M.%S"
+        remote_src: true
+        mode: '0644'
+
+    - name: Remove Sched IDs file if exists
+      ansible.builtin.file:
+        path: "../sched_ids{{ env }}.txt"
+        state: absent
+
 - name: Fetch all enabled schedules
   ansible.builtin.uri:
     url: "{{ controller_url }}/{{ controller_api_url | trim }}/schedules/?enabled=true"
@@ -13,7 +33,7 @@
 - name: Create file containing enabled schedule IDs
   ansible.builtin.lineinfile:
     line: "{{ item.id }}"
-    path: ../sched_ids.txt
+    path: "../sched_ids{{ env }}.txt"
     create: true
     backup: true
     mode: '0644'
