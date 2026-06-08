@@ -4,7 +4,7 @@
 # api/controller/v2/instances/
 - name: Fetch all enabled schedules
   ansible.builtin.uri:
-    url: "{{ controller_url }}/{{ controller_api_url | trim }}/instances/"
+    url: "{{ controller_url }}/{{ controller_api_url | trim }}/instances/?enabled=true"
     method: GET
     status_code: 200
     headers:
