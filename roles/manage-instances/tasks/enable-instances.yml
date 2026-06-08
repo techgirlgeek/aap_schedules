@@ -38,7 +38,7 @@
   register: instance_details
 
 - name: Re-enable each schedule found in the file
-  ansible.controller.schedule:
+  ansible.controller.instance:
     controller_host: "{{ controller_url }}"
     controller_oauthtoken: "{{ controller_token }}"
     hostname: "{{ item.json.hostname }}"
