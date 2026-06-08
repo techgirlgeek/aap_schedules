@@ -1,8 +1,27 @@
 # SPDX-License-Identifier: MIT-0
 ---
 # tasks file for manage-instances
-# api/controller/v2/instances/
-- name: Fetch all enabled schedules
+- name: Look for existing Instance IDs File
+  ansible.builtin.stat:
+    path: "../inst_ids_{{ env }}.txt"
+  register: inst_ids_file
+
+- name: Backup and Remove existing Instance IDs File
+  when: inst_ids_file.stat.exists and inst_ids_file.stat.isreg
+  block:
+    - name: Copy Instance ID file if exists
+      ansible.builtin.copy:
+        src: "../inst_ids_{{ env }}.txt"
+        dest: "../inst_ids_{{ env }}.txt.bak.{{ lookup('ansible.builtin.pipe', 'date +%Y-%m-%d') }}"
+        remote_src: true
+        mode: '0644'
+
+    - name: Remove Instance IDs file if exists
+      ansible.builtin.file:
+        path: "../inst_ids_{{ env }}.txt"
+        state: absent
+
+- name: Fetch all enabled instances
   ansible.builtin.uri:
     url: "{{ controller_url }}/{{ controller_api_url | trim }}/instances/?enabled=true"
     method: GET
@@ -16,5 +35,27 @@
   ansible.builtin.debug:
     msg: "Instance Name: {{ item.hostname }}, ID: {{ item.id }}"
   loop: "{{ controller_instances.json.results }}"
+  loop_control:
+    label: "{{ item.hostname }}"
+
+- name: Create file containing enabled instance IDs
+  ansible.builtin.lineinfile:
+    line: "{{ item.id }}"
+    path: "../inst_ids_{{ env }}.txt"
+    create: true
+    backup: true
+    mode: '0644'
+  loop:
+    "{{ controller_instances.json.results }}"
+
+- name: Disable each instance found
+  ansible.controller.instance:
+    controller_host: "{{ controller_url }}"
+    controller_oauthtoken: "{{ controller_token }}"
+    name: "{{ item.hostname }}"
+    enabled: false
+    state: present
+  loop: "{{ controller_instances.json.results }}"
+  when: controller_instances.json.count > 0
   loop_control:
     label: "{{ item.hostname }}"
