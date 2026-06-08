@@ -1,0 +1,48 @@
+- name: Get status of the file
+  ansible.builtin.stat:
+    path: "../inst_ids_{{ env }}.txt"
+  register: inst_ids_file
+
+- name: Assert that the file exists and is a regular file
+  ansible.builtin.assert:
+    that:
+      - inst_ids_file.stat.exists
+      - inst_ids_file.stat.isreg
+    fail_msg: "The instance IDs file does not exist or is not a regular file!"
+    success_msg: "Instance IDs file found, proceeding with enabling instances."
+
+- name: Read saved instance IDs from file
+  ansible.builtin.slurp:
+    src: "../inst_ids_{{ env }}.txt"
+  register: saved_ids_encoded
+  ignore_errors: true
+
+- name: Parse IDs into a list
+  ansible.builtin.set_fact:
+    instance_ids: "{{ (saved_ids_encoded.content | b64decode).splitlines() | map('trim') | select('match', '^\\d+$') | list }}"
+  when: saved_ids_encoded.content is defined
+
+- name: Stop if no IDs found or file is empty
+  ansible.builtin.meta: end_play
+  when: instance_ids is not defined or instance_ids | length == 0
+
+- name: Fetch full details for each Instance ID
+  ansible.builtin.uri:
+    url: "{{ controller_url }}/{{ controller_api_url | trim }}/instances/{{ item }}/"
+    method: GET
+    status_code: 200
+    headers:
+      Authorization: "Bearer {{ controller_token }}"
+      Content-Type: "application/json"
+  loop: "{{ instance_ids }}"
+  register: instance_details
+
+- name: Re-enable each schedule found in the file
+  ansible.controller.schedule:
+    controller_host: "{{ controller_url }}"
+    controller_oauthtoken: "{{ controller_token }}"
+    hostname: "{{ item.json.name }}"
+    enabled: true
+  loop: "{{ instance_details.results }}"
+  loop_control:
+    label: "{{ item.json.name }} (ID: {{ item.json.id }})"

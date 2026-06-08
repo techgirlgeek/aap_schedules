@@ -6,6 +6,16 @@
   vars_files:
     - ../group_vars/{{ env | default('all') }}.yml
     - ../vaults/{{ env | default('all') }}.yml
-  roles:
-    - aap-version
-    - manage-instances
+  tasks:
+    - name: Check AAP Version
+      ansible.builtin.include_role:
+        name: aap-version
+    - name: Disable Instances
+      ansible.builtin.include_role:
+        name: manage-instances
+      when: disable_env | bool
+    - name: Enable Instances
+      ansible.builtin.include_role:
+        name: manage-instances
+        tasks_from: enable-instances.yml
+      when: enable_env | bool
