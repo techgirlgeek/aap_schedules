@@ -51,10 +51,9 @@
 - name: Disable each instance found
   ansible.controller.instance:
     controller_host: "{{ controller_url }}"
-    aap_token: "{{ controller_token }}"
+    controller_oauthtoken: "{{ controller_token }}"
     hostname: "{{ item.hostname }}"
     enabled: false
-    state: present
   loop: "{{ controller_instances.json.results }}"
   when: controller_instances.json.count > 0
   loop_control:
