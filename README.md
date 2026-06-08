@@ -6,7 +6,7 @@ This project contains a playbook to disable all active schedules in AAP 2.4 and 
 
 The intent of this project is to disable schedules to allow for an AAP upgrade, or other system maintenance, and enable the same schedules once the work is complete.
 
-> **_NOTE:_** Any schedules that were already disabled prior to running `disable_schedules.yml` will stay disabled after running `enable_schedules.yml`
+> **_NOTE:_** Any schedules that were previously disabled prior to running `disable_schedules.yml` task will remain disabled after running `enable_schedules.yml`
 
 ## Getting Started
 
@@ -20,6 +20,8 @@ The intent of this project is to disable schedules to allow for an AAP upgrade, 
     * 2.4: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9:latest
     * 2.5: registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest
     * 2.6: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
+
+Example for how to pull the EE from Red Hat Registry using your login name and password:
 
   ```sh
   podman login registry.redhat.io
