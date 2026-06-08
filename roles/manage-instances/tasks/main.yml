@@ -14,7 +14,7 @@
 
 - name: Display instance names and IDs
   ansible.builtin.debug:
-    msg: "Instance Name: {{ item.name }}, ID: {{ item.id }}"
+    msg: "Instance Name: {{ item.hostname }}, ID: {{ item.id }}"
   loop: "{{ controller_instances.json.results }}"
   loop_control:
-    label: "{{ item.name }}"
+    label: "{{ item.hostname }}"
