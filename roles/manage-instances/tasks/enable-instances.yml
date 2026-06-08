@@ -41,8 +41,8 @@
   ansible.controller.schedule:
     controller_host: "{{ controller_url }}"
     controller_oauthtoken: "{{ controller_token }}"
-    hostname: "{{ item.json.name }}"
+    hostname: "{{ item.json.hostname }}"
     enabled: true
   loop: "{{ instance_details.results }}"
   loop_control:
-    label: "{{ item.json.name }} (ID: {{ item.json.id }})"
+    label: "{{ item.json.hostname }} (ID: {{ item.json.id }})"
