@@ -1,0 +1,6 @@
+---
+# tasks file for enabling schedules
+- name: Get status of the file
+  ansible.builtin.stat:
+    path: "../sched_ids_{{ env }}.txt"
+  register: schedids_file

@@ -1,5 +1,5 @@
 ---
-- name: Manage controller instances
+- name: Manage controller schedules
   hosts: localhost
   connection: local
   gather_facts: false
@@ -10,13 +10,13 @@
     - name: Check AAP Version
       ansible.builtin.include_role:
         name: aap-version
-    - name: Disable Instances
+    - name: Enable Schedules
       ansible.builtin.include_role:
-        name: manage-instances
-        tasks_from: disable-instances.yml
-      when: disable_env is defined and disable_env | bool
-    - name: Enable Instances
-      ansible.builtin.include_role:
-        name: manage-instances
-        tasks_from: enable-instances.yml
+        name: manage-schedules
+        tasks_from: enable-schedules.yml
       when: enable_env is defined and enable_env | bool
+    - name: Disable Schedules
+      ansible.builtin.include_role:
+        name: manage-schedules
+        tasks_from: disable-schedules.yml
+      when: disable_env is defined and disable_env | bool
