@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for manage-instances
+# api/controller/v2/instances/
+- name: Fetch all enabled schedules
+  ansible.builtin.uri:
+    url: "{{ controller_url }}/{{ controller_api_url | trim }}/instances/"
+    method: GET
+    status_code: 200
+    headers:
+      Authorization: "Bearer {{ controller_token }}"
+      Content-Type: "application/json"
+  register: controller_instances
+
+- name: Display instance names and IDs
+  ansible.builtin.debug:
+    msg: "Instance Name: {{ item.name }}, ID: {{ item.id }}"
+  loop: "{{ controller_instances.json.results }}"
+  loop_control:
+    label: "{{ item.name }}"
