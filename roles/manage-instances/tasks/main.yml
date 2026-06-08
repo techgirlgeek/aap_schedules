@@ -52,7 +52,7 @@
   ansible.controller.instance:
     controller_host: "{{ controller_url }}"
     controller_oauthtoken: "{{ controller_token }}"
-    name: "{{ item.hostname }}"
+    hostname: "{{ item.hostname }}"
     enabled: false
     state: present
   loop: "{{ controller_instances.json.results }}"
