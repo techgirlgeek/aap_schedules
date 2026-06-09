@@ -1,10 +1,10 @@
-# Disable/Re-enable Schedules in Ansible Automation Platform
+# Disable/Re-enable processes in Ansible Automation Platform
 
 ## Description
 
-This project contains a playbook to disable all active schedules in AAP 2.4 and above and a playbook to re-enable those schedules after upgrades, system maintenance, etc.
+This project contains playbooks to disable and re-enable all active schedules and instances in AAP 2.4 and above. This can be used for any maintenance tasks against AAP where the system resources would need to be taken down for a period of time. This could include activities like upgrades, system maintenance, etc.
 
-The intent of this project is to disable schedules to allow for an AAP upgrade, or other system maintenance, and enable the same schedules once the work is complete.
+The intent of this project is to disable schedules and instances, etc. to allow for an AAP upgrade, or other system maintenance, and enable the same schedules once the work is complete.
 
 > **_NOTE:_** Any schedules that were previously disabled prior to running `disable_schedules.yml` task will remain disabled after running `enable_schedules.yml`
 

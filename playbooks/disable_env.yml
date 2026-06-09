@@ -1,0 +1,24 @@
+---
+- name: Disable controller schedules and instances pre-maintenance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../group_vars/{{ env | default('all') }}.yml
+    - ../vaults/{{ env | default('all') }}.yml
+  vars:
+    disable_env: true
+  tasks:
+    - name: Check AAP Version
+      ansible.builtin.include_role:
+        name: aap-version
+    - name: Disable Instances
+      ansible.builtin.include_role:
+        name: manage-instances
+        tasks_from: disable-instances.yml
+      when: disable_env is defined and disable_env | bool
+    - name: Disable Schedules
+      ansible.builtin.include_role:
+        name: manage-schedules
+        tasks_from: disable-schedules.yml
+      when: disable_env is defined and disable_env | bool
