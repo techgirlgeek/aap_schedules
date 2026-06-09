@@ -52,20 +52,39 @@ ansible-vault encrypt all.yml
 
 * The ansible-navigator.yml file specifies the AAP 2.6 execution environment. If you are running this on a lower environment you will need to call the EE during the run command:
 
+* To disable schedules and instances separately in AAP 2.4, run the following:
+
 ```sh
-ansible-navigator run playbooks/disable_schedules.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, -e "env=dev" -e "disable_env=true"
+ansible-navigator run playbooks/manage_schedules.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, -e "env=dev" -e "disable_env=true"
+
+ansible-navigator run playbooks/manage_instances.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, -e "env=dev" -e "disable_env=true"
 ```
 
-* To disable all active schedules. IDs of the scheduled jobs will be kept in a file in the playbook directory.
+* To disable all active schedules and instances in AAP 2.5 and above. 
+* IDs of the scheduled jobs will be kept in a file in the playbook directory.
 
 ```sh
-ansible-navigator run playbooks/disable_schedules.yml --ask-vault-password -i localhost, -e "env=dev" -e "disable_env=true"
+ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i localhost, -e "env=dev" -e "disable_env=true"
+ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i localhost, -e "env=dev" -e "disable_env=true"
 ```
 
-* To re-enable all schedules disabled in the previous step
+* Or disable all with one playbook
 
 ```sh
-ansible-navigator run playbooks/enable_schedules.yml --ask-vault-password -i localhost, -e "env=dev" -e "enable_env=true"
+ansible-navigator run playbooks/disable_env.yml --ask-vault-password -i localhost, -e "env=dev" -e "disable_env=true"
+```
+
+* To re-enable all previously active schedules and instances in AAP 2.5 and above, individually, run the following.
+
+```sh
+ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i localhost, -e "env=dev" -e "enable_env=true"
+ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i localhost, -e "env=dev" -e "enable_env=true"
+```
+
+* Or enable all with one playbook
+
+```sh
+ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i localhost, -e "env=dev" -e "enable_env=true"
 ```
 
 ## Authors
