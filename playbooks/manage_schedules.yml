@@ -1,0 +1,22 @@
+---
+- name: Manage controller schedules
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../group_vars/{{ env | default('all') }}.yml
+    - ../vaults/{{ env | default('all') }}.yml
+  tasks:
+    - name: Check AAP Version
+      ansible.builtin.include_role:
+        name: aap-version
+    - name: Enable Schedules
+      ansible.builtin.include_role:
+        name: manage-schedules
+        tasks_from: enable-schedules.yml
+      when: enable_env is defined and enable_env | bool
+    - name: Disable Schedules
+      ansible.builtin.include_role:
+        name: manage-schedules
+        tasks_from: disable-schedules.yml
+      when: disable_env is defined and disable_env | bool

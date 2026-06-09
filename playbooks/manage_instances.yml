@@ -1,0 +1,22 @@
+---
+- name: Manage controller instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../group_vars/{{ env | default('all') }}.yml
+    - ../vaults/{{ env | default('all') }}.yml
+  tasks:
+    - name: Check AAP Version
+      ansible.builtin.include_role:
+        name: aap-version
+    - name: Disable Instances
+      ansible.builtin.include_role:
+        name: manage-instances
+        tasks_from: disable-instances.yml
+      when: disable_env is defined and disable_env | bool
+    - name: Enable Instances
+      ansible.builtin.include_role:
+        name: manage-instances
+        tasks_from: enable-instances.yml
+      when: enable_env is defined and enable_env | bool
