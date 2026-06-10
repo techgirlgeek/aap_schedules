@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: MIT-0
 ---
 # tasks file for manage-instances
-- name: Look for existing Instance IDs File
-  ansible.builtin.stat:
-    path: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
-  register: inst_ids_file
+# - name: Look for existing Instance IDs File
+#   ansible.builtin.stat:
+#     path: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
+#   register: inst_ids_file
 
 - name: Backup and Remove existing Instance IDs File
   when: inst_ids_file.stat.exists and inst_ids_file.stat.isreg

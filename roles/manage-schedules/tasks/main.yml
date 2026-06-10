@@ -4,3 +4,11 @@
   ansible.builtin.stat:
     path: "{{ playbook_dir }}/files/sched_ids_{{ env }}.txt"
   register: sched_ids_file
+
+- name: Disable schedules
+  ansible.builtin.import_tasks: disable-schedules.yml
+  when: disable_env is defined and disable_env | bool
+
+- name: Enable schedules
+  ansible.builtin.import_tasks: enable-schedules.yml
+  when: enable_env is defined and enable_env | bool

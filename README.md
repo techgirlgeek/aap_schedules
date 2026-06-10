@@ -71,7 +71,7 @@ ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inv
 * Or disable all with one playbook
 
 ```sh
-ansible-navigator run playbooks/disable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "disable_env=true"
+ansible-navigator run playbooks/disable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml
 ```
 
 * To re-enable all previously active schedules and instances in AAP 2.5 and above, individually, run the following.
@@ -84,7 +84,7 @@ ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inv
 * Or enable all with one playbook
 
 ```sh
-ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
+ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml
 ```
 
 ## Authors

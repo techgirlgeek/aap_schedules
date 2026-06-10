@@ -1,9 +1,9 @@
 ---
 # tasks file for enabling schedules
-- name: Get status of the file
-  ansible.builtin.stat:
-    path: "{{ playbook_dir }}/files/sched_ids_{{ env }}.txt"
-  register: schedids_file
+# - name: Get status of the file
+#   ansible.builtin.stat:
+#     path: "{{ playbook_dir }}/files/sched_ids_{{ env }}.txt"
+#   register: schedids_file
 
 - name: Assert that the file exists and is a regular file
   ansible.builtin.assert:
