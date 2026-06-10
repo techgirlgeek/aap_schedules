@@ -12,7 +12,7 @@
     - name: Copy Instance ID file if exists
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
-        dest: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt.bak.{{ lookup('ansible.builtin.pipe', 'date +%Y-%m-%d') }}"
+        dest: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt.bak.{{ lookup('ansible.builtin.pipe', 'date +%Y-%m-%d_%T') }}"
         remote_src: true
         mode: '0644'
 
