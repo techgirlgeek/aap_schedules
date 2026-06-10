@@ -1,10 +1,8 @@
 ---
 - name: Manage controller instances
   hosts: localhost
-  connection: local
   gather_facts: false
   vars_files:
-    - ../group_vars/{{ env | default('all') }}.yml
     - ../vaults/{{ env | default('all') }}.yml
   tasks:
     - name: Check AAP Version
