@@ -1,8 +1,5 @@
-# - name: Get status of the file
-#   ansible.builtin.stat:
-#     path: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
-#   register: inst_ids_file
-
+---
+# Tasks to Enable Instances
 - name: Assert that the file exists and is a regular file
   ansible.builtin.assert:
     that:

@@ -13,10 +13,6 @@
     - name: Disable Instances
       ansible.builtin.include_role:
         name: manage-instances
-      #   tasks_from: disable-instances.yml
-      # when: disable_env is defined and disable_env | bool
     - name: Disable Schedules
       ansible.builtin.include_role:
         name: manage-schedules
-      #   tasks_from: disable-schedules.yml
-      # when: disable_env is defined and disable_env | bool
