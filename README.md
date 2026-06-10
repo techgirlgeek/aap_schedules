@@ -32,7 +32,8 @@ Example for how to pull the EE from Red Hat Registry using your login name and p
 
 * Once you have pulled down the playbooks, you will need to update the `controller_url` variable in the group_vars/all.yml file with your controller URL.
 * In the vaults directory there is an all.yml file. This is where you will update the `controller_token` variable with the API token.
-* Next encrypt your vaults/all.yml file (not the full directory) <https://docs.ansible.com/projects/ansible/latest/vault_guide/vault_managing_passwords.html>
+* Next encrypt your vaults/dev.yml (or applicable environment) file (not the full directory) 
+<https://docs.ansible.com/projects/ansible/latest/vault_guide/vault_managing_passwords.html>
 
 ```sh
 ansible-vault encrypt all.yml
@@ -43,14 +44,13 @@ ansible-vault encrypt all.yml
 ### Executing program
 
 * Extra variables to pass at execution time:
-  * Environment: 
-    * `-e "env=dev"` 
-    * Where you specify 3-letter abbreviation for the environment
-  * Action: 
+  * Action only used when running manage-instances or manage-schedules playbooks:
     * `-e "disable_env=true"`
     * `-e "enable_env=true"`
 
 * The ansible-navigator.yml file specifies the AAP 2.6 execution environment. If you are running this on a lower environment you will need to call the EE during the run command:
+
+* In the below examples replace `{{ env }}` with the environment you are working against. 
 
 * To disable schedules and instances separately in AAP 2.4, run the following:
 
@@ -60,31 +60,31 @@ ansible-navigator run playbooks/manage_schedules.yml --eei registry.redhat.io/an
 ansible-navigator run playbooks/manage_instances.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, -e "env=dev" -e "disable_env=true"
 ```
 
-* To disable all active schedules and instances in AAP 2.5 and above. 
+* To disable all active schedules and instances, individually, in AAP 2.5 and above.
 * IDs of the scheduled jobs will be kept in a file in the playbook directory.
 
 ```sh
-ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i localhost, -e "env=dev" -e "disable_env=true"
-ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i localhost, -e "env=dev" -e "disable_env=true"
+ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
+ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "disable_env=true"
 ```
 
 * Or disable all with one playbook
 
 ```sh
-ansible-navigator run playbooks/disable_env.yml --ask-vault-password -i localhost, -e "env=dev" -e "disable_env=true"
+ansible-navigator run playbooks/disable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "disable_env=true"
 ```
 
 * To re-enable all previously active schedules and instances in AAP 2.5 and above, individually, run the following.
 
 ```sh
-ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i localhost, -e "env=dev" -e "enable_env=true"
-ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i localhost, -e "env=dev" -e "enable_env=true"
+ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
+ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
 ```
 
 * Or enable all with one playbook
 
 ```sh
-ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i localhost, -e "env=dev" -e "enable_env=true"
+ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
 ```
 
 ## Authors
