@@ -1,10 +1,4 @@
 ---
-# tasks file for disabling schedules
-# - name: Look for existing Sched IDs File
-#   ansible.builtin.stat:
-#     path: "{{ playbook_dir }}/files/sched_ids_{{ env }}.txt"
-#   register: sched_ids_file
-
 - name: Backup and Remove existing Sched IDs File
   when: sched_ids_file.stat.exists and sched_ids_file.stat.isreg
   block:
