@@ -3,7 +3,7 @@
 # tasks file for manage-instances
 - name: Look for existing Instance IDs File
   ansible.builtin.stat:
-    path: "../inst_ids_{{ env }}.txt"
+    path: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
   register: inst_ids_file
 
 - name: Backup and Remove existing Instance IDs File
@@ -11,14 +11,14 @@
   block:
     - name: Copy Instance ID file if exists
       ansible.builtin.copy:
-        src: "../inst_ids_{{ env }}.txt"
-        dest: "../inst_ids_{{ env }}.txt.bak.{{ lookup('ansible.builtin.pipe', 'date +%Y-%m-%d') }}"
+        src: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
+        dest: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt.bak.{{ lookup('ansible.builtin.pipe', 'date +%Y-%m-%d') }}"
         remote_src: true
         mode: '0644'
 
     - name: Remove Instance IDs file if exists
       ansible.builtin.file:
-        path: "../inst_ids_{{ env }}.txt"
+        path: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
         state: absent
 
 - name: Fetch all enabled instances
@@ -41,9 +41,8 @@
 - name: Create file containing enabled instance IDs
   ansible.builtin.lineinfile:
     line: "{{ item.id }}"
-    path: "../inst_ids_{{ env }}.txt"
+    path: "{{ playbook_dir }}/files/inst_ids_{{ env }}.txt"
     create: true
-    backup: true
     mode: '0644'
   loop:
     "{{ controller_instances.json.results }}"
