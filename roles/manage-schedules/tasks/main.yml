@@ -1,6 +1,6 @@
 ---
 # tasks file for enabling schedules
-- name: Get status of the file
+- name: Look for existing Sched IDs File
   ansible.builtin.stat:
-    path: "../sched_ids_{{ env }}.txt"
-  register: schedids_file
+    path: "{{ playbook_dir }}/files/sched_ids_{{ env }}.txt"
+  register: sched_ids_file
