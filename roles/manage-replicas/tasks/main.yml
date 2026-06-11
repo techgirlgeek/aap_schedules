@@ -11,7 +11,7 @@
 # Ansible 2.6
 
 - name: Patch gateway to set idle_aap to true
-  when: aap_version is ('2.5', '>=')
+  when: aap_version is version('2.5', '>=')
   kubernetes.core.k8s_json_patch:
     api_key: "{{ oc_token }}"
     host: "{{ oc_api_url }}"
