@@ -15,3 +15,7 @@
     aap_version: "{{ csv_list.resources | selectattr('metadata.name', 'search', 'aap-operator') | map(attribute='spec.version') | first }}"
   ansible.builtin.debug:
     msg: "The AAP Operator version is: {{ aap_version }}"
+
+- name: Debug AAP Version
+  ansible.builtin.set_fact:
+    aap_version: "{{ csv_list.resources | selectattr('metadata.name', 'search', 'aap-operator') | map(attribute='spec.version') | first }}"
