@@ -24,40 +24,43 @@
 #   aap_version is ansible.builtin.contains("2.")
 
 # # Ansible 2.4
-# - name: Get count of task pods
-#   kubernetes.core.k8s_info:
-#     api_key: "{{ oc_token }}"
-#     host: "{{ oc_api_url }}"
-#     validate_certs: false
-#     kind: Pod
-#     namespace: "{{ env_ns }}"
-#   register: pod_list
+# - name: Patch gateway to drop replicas to zero
+#   when: aap_version is version('4.5', '>=')
+#   block:
+    # - name: Get count of task pods
+    #   kubernetes.core.k8s_info:
+    #     api_key: "{{ oc_token }}"
+    #     host: "{{ oc_api_url }}"
+    #     validate_certs: false
+    #     kind: Pod
+    #     namespace: "{{ env_ns }}"
+    #   register: pod_list
 
-# # Replicating the 'grep | wc -l' logic using Ansible filters
-# - name: Count task and web pods
-#   ansible.builtin.set_fact:
-#     task_pod_count: "{{ pod_list.resources | selectattr('metadata.name', 'search', aap_app_name ~ '-task') | list | length }}"
-#     web_pod_count: "{{ pod_list.resources | selectattr('metadata.name', 'search', aap_app_name ~ '-web') | list | length }}"
+    # # Replicating the 'grep | wc -l' logic using Ansible filters
+    # - name: Count task and web pods
+    #   ansible.builtin.set_fact:
+    #     task_pod_count: "{{ pod_list.resources | selectattr('metadata.name', 'search', aap_app_name ~ '-task') | list | length }}"
+    #     web_pod_count: "{{ pod_list.resources | selectattr('metadata.name', 'search', aap_app_name ~ '-web') | list | length }}"
 
-# - name: Display current pod counts
-#   ansible.builtin.debug:
-#     msg:
-#       - "Task Pods Count: {{ task_pod_count }}"
-#       - "Web Pods Count: {{ web_pod_count }}"
+    # - name: Display current pod counts
+    #   ansible.builtin.debug:
+    #     msg:
+    #       - "Task Pods Count: {{ task_pod_count }}"
+    #       - "Web Pods Count: {{ web_pod_count }}"
 
-# - name: Patch automationcontroller to scale replicas to 0
-#   kubernetes.core.k8s_json_patch:
-#     api_key: "{{ oc_token }}"
-#     host: "{{ oc_api_url }}"
-#     validate_certs: false
-#     kind: AutomationController
-#     api_version: automationcontroller.ansible.com/v1beta1
-#     namespace: "{{ env_ns }}"
-#     name: "{{ aap_app_name }}"
-#     patch:
-#       - op: add
-#         path: "/spec/replicas"
-#         value: 0
-#       - op: add
-#         path: "/spec/task_replicas"
-#         value: 0
+    # - name: Patch automationcontroller to scale replicas to 0
+    #   kubernetes.core.k8s_json_patch:
+    #     api_key: "{{ oc_token }}"
+    #     host: "{{ oc_api_url }}"
+    #     validate_certs: false
+    #     kind: AutomationController
+    #     api_version: automationcontroller.ansible.com/v1beta1
+    #     namespace: "{{ env_ns }}"
+    #     name: "{{ aap_app_name }}"
+    #     patch:
+    #       - op: add
+    #         path: "/spec/replicas"
+    #         value: 0
+    #       - op: add
+    #         path: "/spec/task_replicas"
+    #         value: 0
