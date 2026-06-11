@@ -9,16 +9,12 @@
     namespace: "{{ env_ns }}"
   register: csv_list
 
-- name: Debug CSV List
+- name: Extract and display AAP Operator version
+  vars:
+    # Filters the CSV list for names containing 'ansible-automation-platform' and grabs its version
+    aap_version: "{{ csv_list.resources | selectattr('metadata.name', 'search', 'aap-operator') | map(attribute='spec.version') | first }}"
   ansible.builtin.debug:
-    var: csv_list
-
-# - name: Extract and display AAP Operator version
-#   vars:
-#     # Filters the CSV list for names containing 'ansible-automation-platform' and grabs its version
-#     aap_version: "{{ csv_list.resources | selectattr('metadata.name', 'search', 'ansible-automation-platform') | map(attribute='spec.version') | first }}"
-#   ansible.builtin.debug:
-#     msg: "The AAP Operator version is: {{ aap_version }}"
+    msg: "The AAP Operator version is: {{ aap_version }}"
 
 # - name: Patch gateway to set idle_aap to false
 #   # when: aap_version is version('2.5', '>=') and aap_version is version('4.5', '<')
