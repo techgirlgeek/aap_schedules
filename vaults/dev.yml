@@ -4,3 +4,4 @@
 # `ansible-vault encrypt vault`
 
 controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"
+oc_token: "sha256~wGC4GbpSFpeG2tbaMYyD58-_D0eah2dOyuJFwvqVIfs"

@@ -1,0 +1,15 @@
+---
+- name: Manage AAP Replicas
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vaults/{{ env | default('all') }}.yml
+  vars:
+    manage_replicas: true
+  tasks:
+    - name: Check AAP Version
+      ansible.builtin.include_role:
+        name: aap-version
+    - name: Manage Replicas
+      ansible.builtin.include_role:
+        name: manage-replicas
