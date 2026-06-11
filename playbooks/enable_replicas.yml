@@ -1,13 +1,15 @@
 ---
-- name: Manage AAP Replicas
+- name: Enable AAP 2.6+ Replicas
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../vaults/{{ env | default('all') }}.yml
+    - ../vaults/{{ env | default('dev') }}.yml
   tasks:
     - name: Check AAP Version
       ansible.builtin.include_role:
         name: aap-version
-    - name: Manage Replicas
+    - name: Enable Replicas 2.6+
       ansible.builtin.include_role:
         name: manage-replicas
+        tasks_from: enable-replicas.yml
+      # when: enable_env is defined and enable_env | bool
