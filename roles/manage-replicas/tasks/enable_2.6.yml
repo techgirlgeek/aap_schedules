@@ -1,6 +1,6 @@
 ---
 - name: Patch gateway to set idle_aap to false
-  when: aap_version is version('2.5', '>=') and aap_version is version('4.5', '<')
+  # when: aap_version is version('2.5', '>=') and aap_version is version('4.5', '<')
   kubernetes.core.k8s_json_patch:
     api_key: "{{ oc_token }}"
     host: "{{ oc_api_url }}"
