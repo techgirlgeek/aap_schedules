@@ -13,5 +13,5 @@
     - name: Enable Replicas 2.6+
       ansible.builtin.include_role:
         name: manage-replicas
-        tasks_from: enable-replicas.yml
+        tasks_from: enable-2.6.yml
       # when: enable_env is defined and enable_env | bool
