@@ -23,7 +23,7 @@
     patch:
       - op: add # 'add' acts as a merge/update if the path already exists or creates it if it doesn't
         path: "/spec/idle_aap"
-        value: "{{ aap_idle | default(true) }}"
+        value: "{{ idle_aap | bool | default(true) }}"
 
 # # Ansible 2.4
 # - name: Patch gateway to drop replicas to zero

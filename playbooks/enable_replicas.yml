@@ -5,7 +5,7 @@
   vars_files:
     - ../vaults/{{ env | default('dev') }}.yml
   vars:
-    aap_idle: false
+    idle_aap: false
   tasks:
     # - name: Check AAP Version
     #   ansible.builtin.include_role:
