@@ -4,8 +4,6 @@
   gather_facts: false
   vars_files:
     - ../vaults/{{ env | default('all') }}.yml
-  vars:
-    manage_replicas: true
   tasks:
     - name: Check AAP Version
       ansible.builtin.include_role:
