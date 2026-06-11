@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: MIT-0
 ---
 # tasks file for manage_replicas
-- name: Show AAP Version
-  ansible.builtin.debug:
-    msg: "AAP Version: {{ aap_version }}"
+- name: Get AAP Operator Version
+  ansible.builtin.import_tasks: get-aap-version.yml
 
 # Ansible 2.6
 
@@ -21,7 +20,6 @@
       - op: add # 'add' acts as a merge/update if the path already exists or creates it if it doesn't
         path: "/spec/idle_aap"
         value: "{{ aap_idle | default(true) }}"
-#   aap_version is ansible.builtin.contains("2.")
 
 # # Ansible 2.4
 # - name: Patch gateway to drop replicas to zero
