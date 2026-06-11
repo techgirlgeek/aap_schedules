@@ -7,9 +7,9 @@
   vars:
     aap_idle: false
   tasks:
-    - name: Check AAP Version
-      ansible.builtin.include_role:
-        name: aap-version
+    # - name: Check AAP Version
+    #   ansible.builtin.include_role:
+    #     name: aap-version
     - name: Enable Replicas 2.6+
       ansible.builtin.include_role:
         name: manage-replicas
