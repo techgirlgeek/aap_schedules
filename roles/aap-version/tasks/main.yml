@@ -25,4 +25,4 @@
 
 - name: Show detected AAP Version
   ansible.builtin.debug:
-    msg: "Detected AAP Version: {{ aap_version }} | Using API URL: {{ controller_api_url }}"
+    msg: "Detected AAP Version: {{ aap_version }} | Using API URL: {{ controller_api_url | trim }}"
