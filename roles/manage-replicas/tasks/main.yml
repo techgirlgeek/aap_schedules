@@ -20,7 +20,7 @@
     patch:
       - op: add # 'add' acts as a merge/update if the path already exists or creates it if it doesn't
         path: "/spec/idle_aap"
-        value: "{{ aap_enabled | default(true) }}"
+        value: "{{ aap_idle | default(true) }}"
 #   aap_version is ansible.builtin.contains("2.")
 
 # # Ansible 2.4

@@ -1,0 +1,16 @@
+---
+- name: Patch gateway to set idle_aap to false
+  when: aap_version is version('2.5', '>=') and aap_version is version('4.5', '<')
+  kubernetes.core.k8s_json_patch:
+    api_key: "{{ oc_token }}"
+    host: "{{ oc_api_url }}"
+    validate_certs: false  # Set to true if your cluster uses trusted CA certificates
+    kind: AnsibleAutomationPlatform
+    api_version: aap.ansible.com/v1alpha1 # Update this if your CRD uses a different API version
+    namespace: "{{ env_ns }}"
+    name: "{{ aap_app_name }}"
+    patch:
+      - op: add # 'add' acts as a merge/update if the path already exists or creates it if it doesn't
+        path: "/spec/idle_aap"
+        value: "{{ aap_idle | default(true) }}"
+#   aap_version is ansible.builtin.contains("2."
