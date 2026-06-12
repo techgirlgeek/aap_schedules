@@ -11,10 +11,10 @@
     - name: Enable Schedules
       ansible.builtin.include_role:
         name: manage-schedules
-        tasks_from: enable-schedules.yml
+        # tasks_from: enable-schedules.yml
       when: enable_env is defined and enable_env | bool
     - name: Disable Schedules
       ansible.builtin.include_role:
         name: manage-schedules
-        tasks_from: disable-schedules.yml
+        # tasks_from: disable-schedules.yml
       when: disable_env is defined and disable_env | bool
