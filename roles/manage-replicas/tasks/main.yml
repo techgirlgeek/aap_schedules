@@ -10,10 +10,6 @@
 
 # Ansible 2.6
 
-- name: What is idle_aap value?
-  ansible.builtin.debug:
-    msg: "idle_aap is set to: {{ idle_aap | bool }}"
-
 - name: Patch gateway to set idle_aap to true
   when: aap_version is version('2.5', '>=')
   kubernetes.core.k8s_json_patch:
@@ -66,7 +62,7 @@
     #     patch:
     #       - op: add
     #         path: "/spec/replicas"
-    #         value: 0
+    #         value: "{{ spec_replicas | default(0) }}"
     #       - op: add
     #         path: "/spec/task_replicas"
-    #         value: 0
+    #         value: "{{ task_replicas | default(0) }}"
