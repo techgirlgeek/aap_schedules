@@ -64,7 +64,7 @@ ansible-navigator run playbooks/manage_instances.yml --eei registry.redhat.io/an
 * IDs of the scheduled jobs will be kept in a file in the playbook directory.
 
 ```sh
-ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
+ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "disable_env=true"
 ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "disable_env=true"
 ```
 
