@@ -1,5 +1,5 @@
 ---
-- name: Manage AAP Replicas
+- name: Manage AAP Operator for OCP Replicas
   hosts: localhost
   gather_facts: false
   vars_files:
