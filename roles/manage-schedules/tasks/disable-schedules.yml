@@ -2,13 +2,13 @@
 - name: Backup and Remove existing Sched IDs File
   when: sched_ids_file.stat.exists and sched_ids_file.stat.isreg
   block:
-    - name: Assert that the file exists and is a regular file
-      ansible.builtin.assert:
-        that:
-          - sched_ids_file.stat.exists
-          - sched_ids_file.stat.isreg
-        fail_msg: "The schedule IDS file does not exist or is not a regular file!"
-        success_msg: "Schedule IDS file found, proceeding with enabling schedules."
+    # - name: Assert that the file exists and is a regular file
+    #   ansible.builtin.assert:
+    #     that:
+    #       - sched_ids_file.stat.exists
+    #       - sched_ids_file.stat.isreg
+    #     fail_msg: "The schedule IDS file does not exist or is not a regular file!"
+    #     success_msg: "Schedule IDS file found, proceeding with enabling schedules."
 
     - name: Copy Sched ID file if exists
       ansible.builtin.copy:
