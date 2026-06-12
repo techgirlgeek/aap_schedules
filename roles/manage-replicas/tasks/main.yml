@@ -61,7 +61,7 @@
         patch:
           - op: add
             path: "/spec/replicas"
-            value: "{{ spec_replicas | default(0) }}"
+            value: "{{ spec_replicas | int | default(0) }}"
           - op: add
             path: "/spec/task_replicas"
-            value: "{{ task_replicas | default(0) }}"
+            value: "{{ task_replicas | int | default(0) }}"
