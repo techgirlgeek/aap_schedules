@@ -26,7 +26,7 @@
 
 # # Ansible 2.4
 - name: Patch gateway to drop replicas to zero
-  when: aap_version is version('4.5', '>=')
+  when: aap_version is version('2.4', '>=') and aap_version is version('2.5', '<')
   block:
     - name: Get count of task pods
       kubernetes.core.k8s_info:
