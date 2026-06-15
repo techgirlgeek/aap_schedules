@@ -50,15 +50,15 @@
           - "Web Pods Count: {{ web_pod_count }}"
 
     - name: Patch automationcontroller to scale replicas to 0
-      # kubernetes.core.k8s_json_patch:
-      ansible.builtin.debug:
-        msg: |
-          api_key: "{{ oc_token }}"
-          host: "{{ oc_api_url }}"
-          validate_certs: false
-          kind: AutomationController
-          api_version: automationcontroller.ansible.com/v1beta1
-          namespace: "{{ env_ns }}"
-          name: "{{ aap_app_name }}"
-          patch:
-            "{{ lookup('ansible.builtin.template', 'replica_patch.yml.j2') | from_yaml }}"
+      kubernetes.core.k8s_json_patch:
+      # ansible.builtin.debug:
+        # msg: |
+        api_key: "{{ oc_token }}"
+        host: "{{ oc_api_url }}"
+        validate_certs: false
+        kind: AutomationController
+        api_version: automationcontroller.ansible.com/v1beta1
+        namespace: "{{ env_ns }}"
+        name: "{{ aap_app_name }}"
+        patch:
+          "{{ lookup('ansible.builtin.template', 'replica_patch.yml.j2') | from_yaml }}"
