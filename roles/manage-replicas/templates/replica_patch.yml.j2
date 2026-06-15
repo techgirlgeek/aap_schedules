@@ -1,6 +1,6 @@
-- op: add
-  path: "/spec/replicas"
-  value: {{ spec_replicas | default(1) | int }}
-- op: add
-  path: "/spec/task_replicas"
-  value: {{ task_replicas | default(1) | int }}
+       - op: add
+         path: "/spec/replicas"
+         value: {{ spec_replicas | default(0) | int }}
+       - op: add
+         path: "/spec/task_replicas"
+         value: {{ task_replicas | default(0) | int }}

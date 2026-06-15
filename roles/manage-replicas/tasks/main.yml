@@ -60,5 +60,5 @@
           api_version: automationcontroller.ansible.com/v1beta1
           namespace: "{{ env_ns }}"
           name: "{{ aap_app_name }}"
-          patch: |
-            "{{ lookup('ansible.builtin.template', 'replica_patch.yml.j2') }}"
+          patch:
+            "{{ lookup('ansible.builtin.template', 'replica_patch.yml.j2') | from_yaml }}"
