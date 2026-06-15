@@ -62,9 +62,3 @@
           name: "{{ aap_app_name }}"
           patch: |
             "{{ lookup('ansible.builtin.template', 'replica_patch.yml.j2') }}"
-            # - op: add
-            #   path: "/spec/replicas"
-            #   value: "{{ spec_replicas | default(1) | int }}"
-            # - op: add
-            #   path: "/spec/task_replicas"
-            #   value: "{{ task_replicas | default(1) | int }}"
