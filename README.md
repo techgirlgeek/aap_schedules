@@ -25,6 +25,9 @@ Example for how to pull the EE from Red Hat Registry using your login name and p
 
   ```sh
   podman login registry.redhat.io
+
+  # The following command only needs to happen once. 
+  # Or it will be pulled during the playbook run.
   podman pull registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
   ```
 
@@ -41,7 +44,9 @@ ansible-vault encrypt all.yml
 
 * Remember the password you used to encrypt the file.
 
-### Executing program
+### Executing playbooks
+
+#### Managing Schedules and Instances
 
 * Extra variables to pass at execution time:
   * Action only used when running manage-instances or manage-schedules playbooks:
@@ -85,6 +90,39 @@ ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inv
 
 ```sh
 ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml
+```
+
+#### Managing Replicas
+
+Default replicas is set to 0, to scale down replicas.
+Be sure to take note of how many replicas were running before disabling.
+
+##### Ansible Automation Platform 2.4
+
+```sh
+# Ansible Automation Platform 2.4
+# Disabling
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/dev/hosts.yml"
+```
+
+```sh
+# Ansible Automation Platform 2.4
+# Enabling
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/dev/hosts.yml -e "spec_replicas=1" -e "task_replicas=1"
+```
+
+#### Ansible Automation Platform 2.6
+
+* Default value for `idle_aap=true`
+
+```sh
+# Set AAP to idle. Scales down existing web and task pods
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/dev/hosts.yml
+```
+
+```sh
+# Unset idle AAP. Scales replicas back up. 
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/dev/hosts.yml -e "idle_aap=false"
 ```
 
 ## Authors
