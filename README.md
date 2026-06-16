@@ -60,7 +60,7 @@ ansible-vault encrypt all.yml
 
 * IDs of the scheduled jobs will be kept in a file in the playbook directory.
 
-* In the below examples replace `{{ env }}` with the environment you are working against. 
+* In the below examples replace `{{ env }}` with the environment you are working against.
 
 #### Ansible Automation Platform 2.4
 
@@ -107,7 +107,7 @@ ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i inventori
 Default replicas is set to 0, to scale down replicas.
 Be sure to take note of how many replicas were running before disabling.
 
-#### Ansible Automation Platform 2.4
+#### Replicas - Ansible Automation Platform 2.4
 
 ```sh
 # Ansible Automation Platform 2.4
@@ -121,7 +121,7 @@ ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hos
 ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "spec_replicas=1" -e "task_replicas=1"
 ```
 
-#### Ansible Automation Platform 2.5 and above
+#### Set Idle - Ansible Automation Platform 2.5 and above
 
 * Default value is `idle_aap=true`
 
