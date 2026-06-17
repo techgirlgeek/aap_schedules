@@ -14,7 +14,7 @@
 
     - name: Debug aap_base
       ansible.builtin.debug:
-        var: aap_api_base.json
+        var: aap_api_base.json.description
 
     - name: Determine the correct /me endpoint URL based on API structure
       ansible.builtin.set_fact:
