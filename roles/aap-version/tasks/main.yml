@@ -21,7 +21,7 @@
         aap_me_endpoint: >-
           {% if aap_api_base.json is defined
              and aap_api_base.json.available_versions is defined
-             and 'controller/v2' in aap_api_base.json.available_versions.keys() | string %}
+             and 'controller/v2' in aap_api_base.json.apis.keys() | string %}
           {{ controller_url }}/api/controller/v2/me/
           {% else %}
           {{ controller_url }}/api/v2/me/
