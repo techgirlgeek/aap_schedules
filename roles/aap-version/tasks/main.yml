@@ -4,7 +4,7 @@
   block:
     - name: Probe base AAP API to detect routing paths
       ansible.builtin.uri:
-        url: "https://{{ controller_url }}/api/"
+        url: "{{ controller_url }}/api/"
         method: GET
         headers:
           Content-Type: "application/json"
@@ -22,9 +22,9 @@
           {% if aap_api_base.json is defined
              and aap_api_base.json.available_versions is defined
              and 'controller/v2' in aap_api_base.json.available_versions.keys() | string %}
-          https://{{ controller_url }}/api/controller/v2/me/
+          {{ controller_url }}/api/controller/v2/me/
           {% else %}
-          https://{{ controller_url }}/api/v2/me/
+          {{ controller_url }}/api/v2/me/
           {% endif %}
 
     - name: Test AAP token validity against detected endpoint
