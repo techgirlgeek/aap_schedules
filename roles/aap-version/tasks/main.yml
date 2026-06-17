@@ -61,7 +61,7 @@
 
     - name: Check api endpoint
       ansible.builtin.debug:
-        var: controller_api_url
+        var: controller_api_url | trim
 
 # - name: Query the Controller configuration endpoint
 #   ansible.builtin.uri:
