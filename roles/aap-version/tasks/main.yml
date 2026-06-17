@@ -32,7 +32,7 @@
         url: "{{ aap_me_endpoint | trim }}"
         method: GET
         headers:
-          Authorization: "Bearer {{ aap_token }}"
+          Authorization: "Bearer {{ controller_token }}"
           Content-Type: "application/json"
         validate_certs: "{{ validate_aap_certs | default(false) }}"
       register: aap_token_test
