@@ -1,0 +1,10 @@
+---
+- name: Test token validity
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vaults/{{ env | default('dev') }}.yml
+  tasks:
+    - name: Check AAP Version
+      ansible.builtin.include_role:
+        name: aap-version
