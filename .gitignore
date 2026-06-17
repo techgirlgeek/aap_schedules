@@ -1,5 +1,5 @@
 .ansible
 *.log
 *.txt
-*.txt.*
+*.txt*
 *.json

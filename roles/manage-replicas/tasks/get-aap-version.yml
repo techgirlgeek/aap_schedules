@@ -1,0 +1,21 @@
+---
+- name: Get AAP Operator CSV details
+  kubernetes.core.k8s_info:
+    api_key: "{{ oc_token }}"
+    host: "{{ oc_api_url }}"
+    validate_certs: false
+    kind: ClusterServiceVersion
+    api_version: operators.coreos.com/v1alpha1
+    namespace: "{{ env_ns }}"
+  register: csv_list
+
+- name: Extract and display AAP Operator version
+  vars:
+    # Filters the CSV list for names containing 'ansible-automation-platform' and grabs its version
+    aap_version: "{{ csv_list.resources | selectattr('metadata.name', 'search', 'aap-operator') | map(attribute='spec.version') | first }}"
+  ansible.builtin.debug:
+    msg: "The AAP Operator version is: {{ aap_version }}"
+
+- name: Debug AAP Version
+  ansible.builtin.set_fact:
+    aap_version: "{{ csv_list.resources | selectattr('metadata.name', 'search', 'aap-operator') | map(attribute='spec.version') | first }}"

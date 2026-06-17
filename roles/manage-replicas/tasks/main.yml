@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for manage_replicas
+- name: Get AAP Operator Version
+  ansible.builtin.import_tasks: get-aap-version.yml
+
+- name: Check AAP Version
+  ansible.builtin.debug:
+    msg: "Detected AAP Version: {{ aap_version }}"
+
+# Ansible 2.5+
+- name: Patch gateway to set idle_aap to true
+  when: aap_version is version('2.5', '>=')
+  kubernetes.core.k8s_json_patch:
+    api_key: "{{ oc_token }}"
+    host: "{{ oc_api_url }}"
+    validate_certs: false  # Set to true if your cluster uses trusted CA certificates
+    kind: AnsibleAutomationPlatform
+    api_version: aap.ansible.com/v1alpha1 # Update this if your CRD uses a different API version
+    namespace: "{{ env_ns }}"
+    name: "{{ aap_app_name }}"
+    patch:
+      - op: add # 'add' acts as a merge/update if the path already exists or creates it if it doesn't
+        path: "/spec/idle_aap"
+        value: "{{ idle_aap | bool | default(true) }}"
+
+# # Ansible 2.4
+- name: Patch gateway to drop replicas to zero
+  when: aap_version is version('2.4', '>=') and aap_version is version('2.5', '<')
+  block:
+    - name: Get count of task pods
+      kubernetes.core.k8s_info:
+        api_key: "{{ oc_token }}"
+        host: "{{ oc_api_url }}"
+        validate_certs: false
+        kind: Pod
+        namespace: "{{ env_ns }}"
+      register: pod_list
+
+    # Replicating the 'grep | wc -l' logic using Ansible filters
+    - name: Count task and web pods
+      ansible.builtin.set_fact:
+        task_pod_count: "{{ pod_list.resources | selectattr('metadata.name', 'search', aap_app_name ~ '-task') | list | length }}"
+        web_pod_count: "{{ pod_list.resources | selectattr('metadata.name', 'search', aap_app_name ~ '-web') | list | length }}"
+
+    - name: Display current pod counts
+      ansible.builtin.debug:
+        msg:
+          - "Task Pods Count: {{ task_pod_count }}"
+          - "Web Pods Count: {{ web_pod_count }}"
+
+    - name: Patch automationcontroller to scale replicas to 0
+      kubernetes.core.k8s_json_patch:
+      # ansible.builtin.debug:
+        # msg: |
+        api_key: "{{ oc_token }}"
+        host: "{{ oc_api_url }}"
+        validate_certs: false
+        kind: AutomationController
+        api_version: automationcontroller.ansible.com/v1beta1
+        namespace: "{{ env_ns }}"
+        name: "{{ aap_app_name }}"
+        patch:
+          "{{ lookup('ansible.builtin.template', 'replica_patch.yml.j2') | from_yaml }}"

@@ -1,0 +1,10 @@
+---
+- name: Manage AAP Operator for OCP Replicas
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../vaults/{{ env | default('dev') }}.yml
+  tasks:
+    - name: Manage Replicas
+      ansible.builtin.include_role:
+        name: manage-replicas

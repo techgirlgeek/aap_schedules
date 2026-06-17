@@ -6,7 +6,7 @@ This project contains playbooks to disable and re-enable all active schedules an
 
 The intent of this project is to disable schedules and instances, etc. to allow for an AAP upgrade, or other system maintenance, and enable the same schedules once the work is complete.
 
-> **_NOTE:_** Any schedules that were previously disabled prior to running `disable_schedules.yml` task will remain disabled after running `enable_schedules.yml`
+> **_NOTE:_** Any process that was previously disabled when the disabling scripts are run will remain disabled when the enabling scripts are run
 
 ## Getting Started
 
@@ -25,13 +25,16 @@ Example for how to pull the EE from Red Hat Registry using your login name and p
 
   ```sh
   podman login registry.redhat.io
+
+  # The following command only needs to happen once. 
+  # Or it will be pulled during the playbook run.
   podman pull registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
   ```
 
 ### Installing
 
-* Once you have pulled down the playbooks, you will need to update the `controller_url` variable in the group_vars/all.yml file with your controller URL.
-* In the vaults directory there is an all.yml file. This is where you will update the `controller_token` variable with the API token.
+* Once you have pulled down the playbooks, you will need to update the `controller_url` variable in the inventories/{{ env }}/hosts.yml file with your controller URL.
+* In the vaults directory there is an all.yml file as well as a file for different environments. This is where you will update the `controller_token` variable with the API token.
 * Next encrypt your vaults/dev.yml (or applicable environment) file (not the full directory) 
 <https://docs.ansible.com/projects/ansible/latest/vault_guide/vault_managing_passwords.html>
 
@@ -41,7 +44,11 @@ ansible-vault encrypt all.yml
 
 * Remember the password you used to encrypt the file.
 
-### Executing program
+## Executing playbooks
+
+### Managing Schedules and Instances
+
+#### Variables and Information
 
 * Extra variables to pass at execution time:
   * Action only used when running manage-instances or manage-schedules playbooks:
@@ -49,42 +56,85 @@ ansible-vault encrypt all.yml
     * `-e "enable_env=true"`
 
 * The ansible-navigator.yml file specifies the AAP 2.6 execution environment. If you are running this on a lower environment you will need to call the EE during the run command:
+  * `--eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9`
 
-* In the below examples replace `{{ env }}` with the environment you are working against. 
-
-* To disable schedules and instances separately in AAP 2.4, run the following:
-
-```sh
-ansible-navigator run playbooks/manage_schedules.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, -e "env=dev" -e "disable_env=true"
-
-ansible-navigator run playbooks/manage_instances.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 -i localhost, -e "env=dev" -e "disable_env=true"
-```
-
-* To disable all active schedules and instances, individually, in AAP 2.5 and above.
 * IDs of the scheduled jobs will be kept in a file in the playbook directory.
 
+* In the below examples replace `{{ env }}` with the environment you are working against.
+
+#### Ansible Automation Platform 2.4
+
+To disable schedules and instances, individually, in AAP 2.4 run the following:
+
 ```sh
-ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
+ansible-navigator run playbooks/manage_schedules.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 --ask-vault-password -i inventories/{{ env }}/hosts.yml, -e "disable_env=true"
+
+ansible-navigator run playbooks/manage_instances.yml --eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9 --ask-vault-password -i inventories/{{ env }}/hosts.yml, -e "disable_env=true"
+```
+
+#### Ansible Automation Platform 2.5 and above
+
+To disable all active schedules and instances, individually, in AAP 2.5 and above
+
+```sh
+ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "disable_env=true"
+
 ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "disable_env=true"
 ```
 
-* Or disable all with one playbook
+Or disable all with one playbook
 
 ```sh
 ansible-navigator run playbooks/disable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml
 ```
 
-* To re-enable all previously active schedules and instances in AAP 2.5 and above, individually, run the following.
+To re-enable all previously active schedules and instances in AAP 2.5 and above individually, run the following.
 
 ```sh
 ansible-navigator run playbooks/manage_schedules.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
+
 ansible-navigator run playbooks/manage_instances.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml -e "enable_env=true"
 ```
 
-* Or enable all with one playbook
+Or enable all with one playbook
 
 ```sh
 ansible-navigator run playbooks/enable_env.yml --ask-vault-password -i inventories/{{ env }}/hosts.yml
+```
+
+### Managing Replicas
+
+Default replicas is set to 0, to scale down replicas.
+Be sure to take note of how many replicas were running before disabling.
+
+#### Replicas - Ansible Automation Platform 2.4
+
+```sh
+# Ansible Automation Platform 2.4
+# Scales down existing web and task pods
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml"
+```
+
+```sh
+# Ansible Automation Platform 2.4
+# Scales replicas back up. 
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "spec_replicas=1" -e "task_replicas=1"
+```
+
+#### Set Idle - Ansible Automation Platform 2.5 and above
+
+* Default value is `idle_aap=true`
+
+```sh
+# Ansible Automation Platform 2.5 and above
+# Set AAP to idle. Scales down existing web and task pods
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml
+```
+
+```sh
+# Ansible Automation Platform 2.5 and above
+# Unset idle AAP. Scales replicas back up. 
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "idle_aap=false"
 ```
 
 ## Authors

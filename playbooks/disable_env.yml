@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - ../vaults/{{ env | default('all') }}.yml
+    - ../vaults/{{ env | default('dev') }}.yml
   vars:
     disable_env: true
   tasks:

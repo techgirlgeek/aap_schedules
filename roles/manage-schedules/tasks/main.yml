@@ -5,6 +5,16 @@
     path: "{{ playbook_dir }}/files/sched_ids_{{ env }}.txt"
   register: sched_ids_file
 
+# - name: Set schedule IDs file fact if file exists
+#   ansible.builtin.set_fact:
+#     sched_ids_file: "{{ lookup('ansible.builtin.file', playbook_dir + '/files/sched_ids_' + env + '.txt') }}"
+#   when: sched_ids_file.stat.exists and sched_ids_file.stat.isreg
+
+# - name: Debug fact
+#   ansible.builtin.debug:
+#     msg: "Schedule IDs file content: {{ sched_ids_file }}"
+#   when: sched_ids_file is defined
+
 - name: Disable schedules
   ansible.builtin.import_tasks: disable-schedules.yml
   when: disable_env is defined and disable_env | bool

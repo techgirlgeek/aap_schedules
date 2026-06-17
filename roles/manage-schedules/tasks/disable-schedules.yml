@@ -2,6 +2,14 @@
 - name: Backup and Remove existing Sched IDs File
   when: sched_ids_file.stat.exists and sched_ids_file.stat.isreg
   block:
+    - name: Assert that the file exists and is a regular file
+      ansible.builtin.assert:
+        that:
+          - sched_ids_file.stat.exists
+          - sched_ids_file.stat.isreg
+        fail_msg: "The schedule IDS file does not exist or is not a regular file!"
+        success_msg: "Schedule IDS file found, proceeding with backing up ID file and disabling schedules."
+
     - name: Copy Sched ID file if exists
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/files/sched_ids_{{ env }}.txt"
@@ -16,7 +24,7 @@
 
 - name: Fetch all enabled schedules
   ansible.builtin.uri:
-    url: "{{ controller_url }}/{{ controller_api_url | trim }}/schedules/?enabled=true"
+    url: "{{ controller_url }}/{{ controller_api_url | trim }}/schedules/?page_size=500&enabled=true"
     method: GET
     status_code: 200
     headers:
