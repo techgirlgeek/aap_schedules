@@ -5,6 +5,6 @@
   vars_files:
     - ../vaults/{{ env | default('dev') }}.yml
   tasks:
-    - name: Check AAP Version
+    - name: Check AAP Access and endpoints
       ansible.builtin.include_role:
-        name: aap-version
+        name: aap-access

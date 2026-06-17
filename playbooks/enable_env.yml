@@ -7,9 +7,9 @@
   vars:
     enable_env: true
   tasks:
-    - name: Check AAP Version
+    - name: Check AAP Access and endpoints
       ansible.builtin.include_role:
-        name: aap-version
+        name: aap-access
     - name: Disable Instances
       ansible.builtin.include_role:
         name: manage-instances

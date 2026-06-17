@@ -58,34 +58,3 @@
           {% else %}
             api/v2
           {% endif %}
-
-    - name: Check api endpoint
-      ansible.builtin.debug:
-        var: controller_api_url | trim
-
-# - name: Query the Controller configuration endpoint
-#   ansible.builtin.uri:
-#     url: "{{ controller_url }}/api/"
-#     method: GET
-#     status_code: 200
-#     headers:
-#       Authorization: "Bearer {{ controller_token }}"
-#       Content-Type: "application/json"
-#   register: controller_config
-
-# - name: Set aap_version fact
-#   ansible.builtin.set_fact:
-#     aap_version: "{{ controller_config.x_api_product_version }}"
-
-# - name: Set controller api based on aap_version
-#   ansible.builtin.set_fact:
-#     controller_api_url: >-
-#       {% if aap_version is version('4.5', '>=') %}
-#         api/v2
-#       {% elif aap_version is version('2.5', '>=') and aap_version is version('4.5', '<') %}
-#         api/controller/v2
-#       {% endif %}
-
-# - name: Show detected AAP Version
-#   ansible.builtin.debug:
-#     msg: "Detected AAP Version: {{ aap_version }} | Using API URL: {{ controller_api_url | trim }}"
