@@ -38,6 +38,10 @@
       register: aap_token_test
       ignore_errors: true
 
+    - name: Debug what is in aap_token_test
+      ansible.builtin.debug:
+        var: aap_token_test
+
     - name: Assert that the AAP token is valid
       ansible.builtin.assert:
         that:
