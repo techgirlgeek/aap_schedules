@@ -40,7 +40,7 @@
 
     - name: Debug what is in aap_token_test
       ansible.builtin.debug:
-        var: aap_token_test
+        var: aap_token_test.json.results
 
     - name: Assert that the AAP token is valid
       ansible.builtin.assert:
