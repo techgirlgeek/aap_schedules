@@ -18,7 +18,7 @@
 
 - name: Fetch all enabled instances
   ansible.builtin.uri:
-    url: "{{ controller_url }}/{{ controller_api_url | trim }}/instances/?enabled=true"
+    url: "{{ controller_url }}/{{ aap_api_endpoint | trim }}/instances/?enabled=true"
     method: GET
     status_code: 200
     headers:
