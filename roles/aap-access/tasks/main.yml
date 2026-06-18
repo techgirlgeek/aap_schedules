@@ -58,4 +58,3 @@
           {% else %}
             api/v2
           {% endif %}
-
