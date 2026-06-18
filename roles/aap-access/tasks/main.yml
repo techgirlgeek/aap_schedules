@@ -10,7 +10,8 @@
           Content-Type: "application/json"
         validate_certs: "{{ validate_aap_certs | default(false) }}"
       register: aap_api_base
-      ignore_errors: true
+      failed_when:
+        - aap_api_base.json.status == 401
 
     - name: Determine the correct /me endpoint URL based on API structure
       ansible.builtin.set_fact:
