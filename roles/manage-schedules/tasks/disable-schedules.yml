@@ -24,7 +24,7 @@
 
 - name: Fetch all enabled schedules
   ansible.builtin.uri:
-    url: "{{ controller_url }}/{{ controller_api_url | trim }}/schedules/?page_size=500&enabled=true"
+    url: "{{ controller_url }}/{{ aap_api_endpoint | trim }}/schedules/?page_size=500&enabled=true"
     method: GET
     status_code: 200
     headers:

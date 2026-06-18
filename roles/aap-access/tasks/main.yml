@@ -50,7 +50,7 @@
 
     - name: Determine the correct /api endpoint URL based on API structure
       ansible.builtin.set_fact:
-        controller_api_url: >-
+        aap_api_endpoint: >-
           {% if aap_api_base.json is defined
              and aap_api_base.json.apis is defined
              and 'controller' in aap_api_base.json.apis.keys() | string %}
