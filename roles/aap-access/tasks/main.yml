@@ -34,10 +34,6 @@
       register: aap_token_test
       ignore_errors: true
 
-    # - name: Debug token
-    #  ansible.builtin.debug:
-    #    var: aap_token_test
-
     - name: Assert that the AAP token is valid
       ansible.builtin.assert:
         that:
@@ -45,14 +41,12 @@
           - aap_token_test.json.results is defined
           - aap_token_test.json.results | length > 0
           - aap_token_test.json.results[0].username is defined
-        msg: "Looks like your token may have expired. Received an HTTP status {{ aap_token_test.status }} instead of 200."
-        # Uncomment fail_msg and success_msg for AAP 2.7 and above
-        # fail_msg: |
-          # AAP Token Validation Failed!
-          # Attempted Endpoint: {{ aap_me_endpoint | trim }}
-          # HTTP Status Code: {{ aap_token_test.status | default('No Response') }}
-          # Error Details: {{ aap_token_test.json | default(aap_token_test.msg | default('Could not reach the AAP controller host.')) }}
-        # success_msg: "AAP token is valid on this platform version. Authenticated as: {{ aap_token_test.json.results[0].username }}"
+        fail_msg: >
+          AAP Token Validation Failed!
+          Attempted Endpoint: {{ aap_me_endpoint | trim }}
+          HTTP Status Code: {{ aap_token_test.status | default('No Response') }}
+          Error Details: {{ aap_token_test.json | default(aap_token_test.msg | default('Check you are using a valid API Token')) }}
+        success_msg: "AAP token is valid on this platform version. HTTP status code: {{ aap_token_test.status }}"
 
     - name: Determine the correct /api endpoint URL based on API structure
       ansible.builtin.set_fact:
@@ -64,3 +58,4 @@
           {% else %}
             api/v2
           {% endif %}
+
