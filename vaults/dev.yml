@@ -3,6 +3,6 @@
 # Encrypt prior to using
 # `ansible-vault encrypt vault`
 
-controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFft"
-# controller_token: "hMm8ZqH9YMiLcrOOnGrStwSUzeIFftii"
-oc_token: "sha256~1MM3EIj9uXJnAkz4Qq8__IOeJSQY8uOOJrCcjRK77AY"
+controller_token: "blah"
+# controller_token: "blah_123"
+oc_token: "sha256~blah"
