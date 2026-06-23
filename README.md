@@ -112,13 +112,13 @@ Be sure to take note of how many replicas were running before disabling.
 ```sh
 # Ansible Automation Platform 2.4
 # Scales down existing web and task pods
-ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml"
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml --ask-vault-password
 ```
 
 ```sh
 # Ansible Automation Platform 2.4
 # Scales replicas back up. 
-ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "spec_replicas=1" -e "task_replicas=1"
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "spec_replicas=1" -e "task_replicas=1" --ask-vault-password
 ```
 
 #### Set Idle - Ansible Automation Platform 2.5 and above
@@ -133,8 +133,8 @@ ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hos
 
 ```sh
 # Ansible Automation Platform 2.5 and above
-# Unset idle AAP. Scales replicas back up. 
-ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "idle_aap=false"
+# Unset idle AAP. Scales replicas back up.
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "idle_aap=false" --ask-vault-password
 ```
 
 ## Authors

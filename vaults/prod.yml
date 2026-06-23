@@ -2,4 +2,5 @@
 # Put production API Token here.
 # Replace <PROD_API_TOKEN> with the actual token value before running playbooks against production environment.
 # ansible-vault encrypt prod.yml
-controller_token: "<PROD_API_TOKEN>" 
+controller_token: "<PROD_API_TOKEN>"
+oc_token: "ocp_sha_token"
