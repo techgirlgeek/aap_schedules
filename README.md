@@ -26,7 +26,7 @@ Example for how to pull the EE from Red Hat Registry using your login name and p
   ```sh
   podman login registry.redhat.io
 
-  # The following command only needs to happen once. 
+  # The following command only needs to happen once.
   # Or it will be pulled during the playbook run.
   podman pull registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
   ```
@@ -35,7 +35,7 @@ Example for how to pull the EE from Red Hat Registry using your login name and p
 
 * Once you have pulled down the playbooks, you will need to update the `controller_url` variable in the inventories/{{ env }}/hosts.yml file with your controller URL.
 * In the vaults directory there is an all.yml file as well as a file for different environments. This is where you will update the `controller_token` variable with the API token.
-* Next encrypt your vaults/dev.yml (or applicable environment) file (not the full directory) 
+* Next encrypt your vaults/dev.yml (or applicable environment) file (not the full directory)
 <https://docs.ansible.com/projects/ansible/latest/vault_guide/vault_managing_passwords.html>
 
 ```sh
@@ -117,7 +117,7 @@ ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hos
 
 ```sh
 # Ansible Automation Platform 2.4
-# Scales replicas back up. 
+# Scales replicas back up.
 ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "spec_replicas=1" -e "task_replicas=1" --ask-vault-password
 ```
 
