@@ -54,6 +54,9 @@ ansible-vault encrypt all.yml
   * Action only used when running manage-instances or manage-schedules playbooks:
     * `-e "disable_env=true"`
     * `-e "enable_env=true"`
+  * When disabling schedules, if there are more than 250 enabled schedules, use the following extra variable.
+    * `-e "aap_schedules_count=500"`
+    * Where 500 is an example of how many enabled schedules were found.
 
 * The ansible-navigator.yml file specifies the AAP 2.6 execution environment. If you are running this on a lower environment you will need to call the EE during the run command:
   * `--eei registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel9`
