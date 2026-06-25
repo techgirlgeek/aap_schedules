@@ -121,7 +121,7 @@ ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hos
 ```sh
 # Ansible Automation Platform 2.4
 # Scales replicas back up.
-ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "spec_replicas=1" -e "task_replicas=1" --ask-vault-password
+ansible-navigator run playbooks/manage_replicas.yml -i inventories/{{ env }}/hosts.yml -e "web_replicas=1" -e "task_replicas=1" --ask-vault-password
 ```
 
 #### Set Idle - Ansible Automation Platform 2.5 and above
